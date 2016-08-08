@@ -1,14 +1,14 @@
-$(function(){
-var pg = 0;
-$("#grid").hide();
+$(function(){ // ready function
+var pg = 0; // creating a new variable to count page number
+$("#grid").hide(); //hiding results div 
 
-$("#search-form").submit(function (event) {
+$("#search-form").submit(function (event) { // inital submission of api request by user
 	event.preventDefault();
 	$("#grid").show();
 	showArticles($("#query").val());
 });
 
-$("#grid").on('click', '.older', function(event) {
+$("#grid").on('click', '.older', function(event) { // next page functionality 
 	console.log("clicked the more button!");
 	event.preventDefault();
 	pg += 1
@@ -16,7 +16,7 @@ $("#grid").on('click', '.older', function(event) {
 	window.scrollTo(0, 0);
 });
 
-$("#grid").on('click', '.newer', function(event) {
+$("#grid").on('click', '.newer', function(event) { // previous page functionality
 	console.log("clicked the more button!");
 	event.preventDefault();
 	pg += -1
@@ -25,7 +25,7 @@ $("#grid").on('click', '.newer', function(event) {
 });
 
 function showArticles(keyword) {
-var url = "https://api.nytimes.com/svc/search/v2/articlesearch.json"
+var url = "https://api.nytimes.com/svc/search/v2/articlesearch.json" // API request parameters 
 url += '?' + $.param({
 	'api-key': "2780d8b74fe6429e8f8037d463875269",
 	'q': keyword,
@@ -34,8 +34,8 @@ url += '?' + $.param({
 });
 
 var html = "";
-var imgurl = "https://static01.nyt.com/";
-$.ajax({
+
+$.ajax({  // AJAX Request 
 	url: url,
 	method: 'GET',
 }).done(function(result) {
@@ -44,7 +44,7 @@ $.ajax({
 	if (result.response.docs.length != 0) {
 	$.each(result.response.docs, function(index, article) {
 		var time = ""
-		function rTime() {
+		function rTime() {  // function to calculate estimated reading time for an article
 			rTime = article.word_count/130;
 			time = Math.ceil(rTime);
 		}
@@ -56,15 +56,11 @@ $.ajax({
 		$(".newer").hide();
 	};
 }
-else {
+else {  // If search keyword produces no results
 	html = "There were no available stories. Please try a different search keyword."
 	$("#grid-item").html(html);
 }}).fail(function(err) {
 	throw err;
 }); 
 };
-
-
-
-
 });

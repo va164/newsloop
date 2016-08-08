@@ -2,7 +2,7 @@
 	box-sizing: border-box;
 }
 
-body{
+body {
 	font-family: 'Open Sans', sans-serif;
 	color: #37475C;
 	font-weight: bold;
@@ -68,7 +68,7 @@ body{
 	background-color: #F1F3F4;
 }
 
-#grid-item{
+#grid-item {
 	text-align: center;
 	min-width: 150px;
 	margin: 0 auto;
